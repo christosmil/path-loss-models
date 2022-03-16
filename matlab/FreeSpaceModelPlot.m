@@ -1,17 +1,44 @@
 function FreeSpaceModelPlot()
-X = 1:1:1000; % distance in m
-FS900 = zeros(1,length(X));
-FS1800 = zeros(1,length(X));
-FS2400 = zeros(1,length(X));
-for i = 1:length(X)
-    [FS900(1,i)] = FreeSpaceModel(X(i),900);
-    [FS1800(1,i)] = FreeSpaceModel(X(i),1800);
-    [FS2400(1,i)] = FreeSpaceModel(X(i),2400);
+clc; close all;
+
+distances = [1:0.5:9 10:5:90 100:50:1000];
+frequencies = [900 1800 2400];
+
+LINEWIDTH = 2;
+LINESTYLES = ["-" "--" ":"];
+MARKERSIZE = LINEWIDTH + 2;
+MARKERS = ["*" "v" "square"];
+FONTNAME = "Calibri Light";
+FONTSIZE = 18;
+RESULTS_FOLDER = "./results";
+
+if not(isfolder(RESULTS_FOLDER))
+    mkdir(RESULTS_FOLDER);
 end
-figure;
-semilogx(X,FS900,X,FS1800,X,FS2400);
+
+freeSpace = zeros(length(frequencies),length(distances));
+for iter1 = 1:length(distances)
+    for iter2 = 1:length(frequencies)
+        freeSpace(iter2, iter1) = FreeSpaceModel(distances(iter1), ...
+            frequencies(iter2));
+    end
+end
+
+figure('Position', get(0, 'Screensize'), 'visible', 'off');
+for iter = 1:height(freeSpace)
+    semilogx(distances, freeSpace(iter,:), 'LineWidth', LINEWIDTH, ...
+        'LineStyle', LINESTYLES(iter), 'MarkerSize', MARKERSIZE, ...
+        'Marker', MARKERS(iter), 'DisplayName', ...
+        sprintf('%dMHz', frequencies(iter)));
+    hold on;
+end
+hold off;
 grid on;
-title("Free Space Path Loss");
+set(gca, 'FontSize', FONTSIZE, 'FontName', FONTNAME);
 xlabel("Distance (m)");
 ylabel("Path Loss (dB)");
-legend("900 MHz", "1800 MHz", "2400 MHz");
+legend('Location', 'SouthEast');
+saveas(gcf, sprintf('%s/analytical-free-space.svg', RESULTS_FOLDER));
+exportgraphics(gcf, sprintf('%s/analytical-free-space.png', ...
+    RESULTS_FOLDER));
+end
