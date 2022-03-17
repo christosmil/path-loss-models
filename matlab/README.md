@@ -7,6 +7,7 @@ Models that were studied include:
   - Free space
   - Knife edge diffraction
   - Plane earth
+  - Rounded obstacle diffraction
 - Empirical models
   - Building penetration
   - COST231-Hata[^1]
@@ -19,7 +20,6 @@ Models that were studied include:
   - Log distance indoor
   - Log distance outdoor
   - Okumura-Hata
-  - Rounded obstacle diffraction
   - Simple linear
   - WINNER II
 
