@@ -25,7 +25,7 @@ for iter1 = 1:length(distances)
     end
 end
 
-figure;
+figure('Position', get(0, 'ScreenSize'));
 for iter = 1:height(planeEarth)
     semilogx(distances, planeEarth(iter,:), 'LineWidth', LINEWIDTH, ...
         'LineStyle', LINESTYLES(iter), 'MarkerSize', MARKERSIZE, ...
@@ -39,5 +39,4 @@ set(gca, 'FontSize', FONTSIZE, 'FontName', FONTNAME);
 xlabel("Distance (m)");
 ylabel("Path Loss (dB)");
 legend('Location', 'SouthEast');
-saveas(gcf, sprintf('%s/analytical-plane-earth.svg', RESULTS_FOLDER));
 end

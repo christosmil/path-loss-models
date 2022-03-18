@@ -24,7 +24,7 @@ for iter1 = 1:length(distances)
     end
 end
 
-figure('Position', get(0, 'Screensize'), 'visible', 'off');
+figure('Position', get(0, 'ScreenSize'), 'Visible', 'off');
 for iter = 1:height(freeSpace)
     semilogx(distances, freeSpace(iter,:), 'LineWidth', LINEWIDTH, ...
         'LineStyle', LINESTYLES(iter), 'MarkerSize', MARKERSIZE, ...
